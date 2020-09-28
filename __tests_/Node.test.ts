@@ -63,3 +63,25 @@ Deno.test("Defined properties in Node class", () => {
     expect( test_node.next ).toBeDefined()
 
 })
+
+Deno.test("Testing Iterator Iterable object", () => {
+
+    const test_node = new Node(12, 
+                        new Node(13, 
+                            new Node(14,
+                                new Node(15, 
+                                    new Node(16)))));
+
+    const iterable = test_node[Symbol.iterator]()
+
+    let object = iterable.next()
+    do {
+        expect(object.value).not.toBeUndefined()
+        expect(typeof object.value).toBe('number')
+        
+        if(object.done === true) {
+            expect(object.value).toBeUndefined()
+        }
+
+    } while (( object = iterable.next(), object.value))
+})
