@@ -24,7 +24,7 @@ export interface SingleLinkedList<T> {
     tail: Node<T> = new Node<T>()
     size: number  = 0
 
-    constructor(...args: T[]) {
+    constructor(...args: any[]) {
         this.addMany(...args)
     }
 
@@ -68,7 +68,7 @@ export interface SingleLinkedList<T> {
         } else {
 
             throw new Error('insertIn is no one of "head" or "tail"')
-            
+
         }
 
         this.size++
