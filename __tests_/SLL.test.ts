@@ -1,6 +1,6 @@
 import { assertEquals } from 'https://deno.land/std/testing/asserts.ts';
 import { expect } from 'https://deno.land/x/expect/expect.ts';
-import SLL, { SingleLinkedList } from '../Lists/SLL.ts';
+import SLL from '../Lists/SLL.ts';
 import Node from '../Lists/Node.ts'
 
 
@@ -57,7 +57,7 @@ Deno.test("Testing addOne function with addMany", () => {
 
     assertEquals(sll.size, 5)
 
-    let slldouble: SLL<SingleLinkedList<any>> = new SLL()
+    let slldouble: SLL<SLL<any>> = new SLL()
 
     for(let i in  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) {
 

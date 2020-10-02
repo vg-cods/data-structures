@@ -1,7 +1,7 @@
 /**
  *      Single Linked List
  *    
- *      Implementetion of ageneric SLL   
+ *      Implementetion of a generic SLL   
  * 
  *      @author M. Angel V. G.
  *      @date   9/28/2000 
@@ -9,16 +9,10 @@
 
 import Node from './Node.ts'
 
-type InsertionOrderType = 'head' | 'tail' 
-
-export interface SingleLinkedList<T> {
-    head: Node<T>
-    tail: Node<T>
-    size: number
-}
+type InsertionOrderType = 'head' | 'tail'
 
 
- export default class SLL<T> implements SingleLinkedList<T> {
+ export default class SLL<T> {
 
     head: Node<T> = new Node<T>()
     tail: Node<T> = new Node<T>()

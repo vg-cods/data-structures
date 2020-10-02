@@ -1,4 +1,4 @@
-import { assertEquals } from 'https://deno.land/std/testing/asserts.ts';
+import { assertEquals, assertStrictEquals } from 'https://deno.land/std/testing/asserts.ts';
 import { expect } from 'https://deno.land/x/expect/expect.ts'
 import Node from '../Lists/Node.ts';
 
@@ -84,4 +84,31 @@ Deno.test("Testing Iterator Iterable object", () => {
         }
 
     } while (( object = iterable.next(), object.value))
+})
+
+Deno.test("Testing strict equality over iterator", () => {
+
+    let node: Node<number>
+    let node2: Node<string>
+
+    node = new Node(1, new Node(2, new Node(3, new Node(4, new Node(5)))))
+    node2 = new Node('a', new Node('b', new Node('c', new Node('d'))))
+
+    assertEquals([...node], [1, 2, 3, 4, 5])
+    assertEquals([...node2], ['a', 'b', 'c', 'd'])
+
+    Deno.test("Asserting Iterator equality ", () => {
+
+        let it: IterableIterator<number>
+        it = node[Symbol.iterator]()
+        it.next()
+        let a: number[] = [1, 2, 3, 4, 5]
+
+        let next: IteratorResult<number>
+        while( (next = it.next()).value ) {
+            assertEquals(next.value, a.unshift())
+        }
+
+    })
+
 })
