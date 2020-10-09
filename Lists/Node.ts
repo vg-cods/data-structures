@@ -7,6 +7,10 @@
  *      @date   9/28/2000 
  */
 
+type NodeArgs<T> =
+    | []
+    | [value: T]
+    | [value: T, next: Node<T>]
 
 export default class Node<T> {
 
@@ -16,16 +20,6 @@ export default class Node<T> {
     constructor(value?: T, next: Node<T> | null = null) {
         this.value = value
         this.next  = next
-    }
-
-    // Making the class Iterable
-    *[Symbol.iterator](): IterableIterator<T> {
-        let node: Node<T> | null 
-        node = this
-        while(node && node.value) {
-            yield node.value
-            node = node.next
-        }
-    }   
+    }  
 
 }

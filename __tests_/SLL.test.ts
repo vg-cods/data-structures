@@ -11,6 +11,7 @@ Deno.test("Testing basic structure of a SSL", () => {
     expect(sll).toHaveProperty('head');
     expect(sll).toHaveProperty('tail');
     expect(sll).toHaveProperty('size');
+    expect(sll[Symbol.iterator]).toBeDefined();
     
 })
 
@@ -75,14 +76,14 @@ Deno.test("Testing order of insertion to head and tail", () => {
     let sll2: SLL<number> = new SLL<number>().addMany('tail', 1,2,3,4,5,6,7,8,9)
     let sll3: SLL<number> = new SLL<number>().addMany(1,2,3,4,5,6,7,8,9)
 
-    expect([...sll1.head][0]).toBe(9)
-    expect([...sll2.head][0]).toBe(1)
+    expect([...sll1][0]).toBe(9)
+    expect([...sll2][0]).toBe(1)
 
-    expect([...sll1.head][1]).toBe(8)
-    expect([...sll2.head][1]).toBe(2)
+    expect([...sll1][1]).toBe(8)
+    expect([...sll2][1]).toBe(2)
 
-    expect([...sll3.head][0]).toBe(9)
-    expect([...sll3.head][1]).toBe(8)    
+    expect([...sll3][0]).toBe(9)
+    expect([...sll3][1]).toBe(8)    
 
 })
 
@@ -92,14 +93,14 @@ Deno.test("Order of insertion SLL Constructor ", () => {
     let sll2: SLL<number> = new SLL<number>('tail', 1,2,3,4,5,6,7,8,9)
     let sll3: SLL<number> = new SLL<number>(1,2,3,4,5,6,7,8,9)
 
-    expect([...sll1.head][0]).toBe(9)
-    expect([...sll2.head][0]).toBe(1)
+    expect([...sll1][0]).toBe(9)
+    expect([...sll2][0]).toBe(1)
 
-    expect([...sll1.head][1]).toBe(8)
-    expect([...sll2.head][1]).toBe(2)
+    expect([...sll1][1]).toBe(8)
+    expect([...sll2][1]).toBe(2)
 
-    expect([...sll3.head][0]).toBe(9)
-    expect([...sll3.head][1]).toBe(8)    
+    expect([...sll3][0]).toBe(9)
+    expect([...sll3][1]).toBe(8)    
 
 })
 
@@ -117,6 +118,39 @@ Deno.test("Order of insertion addOne() ", () => {
     .addOne(18, 'tail')
     .addOne(19, 'head')
 
-    expect([...sll1.head]).toEqual([19,16,14,12,13,15,17,18])
+    expect([...sll1]).toEqual([19,16,14,12,13,15,17,18])
+
+})
+
+Deno.test("Testing iterator", () => {
+
+    let sll1: SLL<number> = new SLL();
+    sll1.addMany(1, 2, 3, 4 ,5, 6, 7, 8, 9)
+
+    let iterator = sll1[Symbol.iterator]()
+
+    expect(typeof iterator).toBe('object')
+    expect(typeof iterator.next).toBe('function')
+    expect(typeof iterator.next()).toBe('object')
+    
+    let iterator2 = sll1[Symbol.iterator]()
+    
+    let obj: IteratorResult<number>
+
+    do {
+        obj = iterator2.next()
+
+        expect(typeof obj.value).toBe('number')
+
+    } while (  (obj = iterator2.next()).value )
+
+    let sll2 = new SLL()
+    sll2.addOne(0)
+
+    let iterator3 = sll2[Symbol.iterator]()
+
+    expect(sll2.size).toBe(1)
+    expect(iterator3.next).toBeDefined()
+    expect(iterator3.next().value).toBe(0)
 
 })

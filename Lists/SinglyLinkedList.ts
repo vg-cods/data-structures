@@ -1,7 +1,7 @@
 /**
  *      Single Linked List
  *    
- *      Implementetion of a generic SLL   
+ *      Implementetion of a generic SinglyLinkedList   
  * 
  *      @author M. Angel V. G.
  *      @date   9/28/2000 
@@ -12,7 +12,7 @@ import Node from './Node.ts'
 type InsertionOrderType = 'head' | 'tail'
 
 
- export default class SLL<T> {
+ export default class SinglyLinkedList<T> {
 
     head: Node<T> = new Node<T>()
     tail: Node<T> = new Node<T>()
@@ -59,11 +59,7 @@ type InsertionOrderType = 'head' | 'tail'
 
             this.tail = this.tail.next = new Node<T>(value) 
 
-        } else {
-
-            throw new Error('insertIn is no one of "head" or "tail"')
-
-        }
+        } else {}
 
         this.size++
 
@@ -71,8 +67,13 @@ type InsertionOrderType = 'head' | 'tail'
     }
 
     // Making the calss iterable if there is a node in the head
+    // Making the class Iterable
     *[Symbol.iterator](): IterableIterator<T> {
-        yield * this.head
-    }
-
- }
+        let node: Node<T> | null 
+        node = this.head
+        while(node && node.value) {
+            yield node.value
+            node = node.next
+        }
+    } 
+}
